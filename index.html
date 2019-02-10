@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="todoApp"> 
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>Angular Example</title>
+    </head>
+    <body ng-controller="TodoHomeController">
+        <div class="topnav">
+            <span>To-Do App</span>
+            <i class="glyphicon glyphicon-tasks"></i>
+            <button ng-click="open_task()">Add New Task</button>
+        </div>
+        <div class="row"> 
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 class="no-list" ng-if="!task_list">Tasks Yet To Be Created..!</h3>
+                <h3 class="when-list" ng-if="task_list">Task List</h3>
+                <div class="sortable-container" sv-root sv-part="task_list"sv-on-sort="update_task_list_order(task_list)">
+                        <div ng-repeat="task in task_list track by $index" sv-element="opts" class="well" >
+                                <span class="task-css" ng-click="open_task(task,$index)"> 
+                                        <span ng-class="task.status == 'Done' ? 'task-status-done' : 'task-status-todo'"><i class="glyphicon glyphicon-time"></i> {{task.status}}</span>
+                                        <span class="task-title" title="Title">{{task.title}} : </span>
+                                        <span title="Description"> {{task.description | limitTo : 70}} <span ng-if="task.description.length > 70">....</span> </span>
+                                        <span title="Priority"><i class="glyphicon glyphicon-exclamation-sign" ng-class="task.priority == 'P0' ? 'p1' : 'p2'"></i> {{task.priority}}</span>
+                                    </span>
+                                    <span>
+                                            <button class="button__fixed" ng-model="data.select_for_status[$index]" ng-click="toggleStatusAction($index, status_change[task.status])">Mark as {{status_change[task.status]}}</button>
+                                </span>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-2"></div>
+
+        </div>
+    </body>
+    
+    <script type="text/javascript" src="/node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-sortable-view/src/angular-sortable-view.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/todo_home_ctrl.js"></script>
+    
+</html>
